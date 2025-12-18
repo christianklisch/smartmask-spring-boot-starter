@@ -41,10 +41,10 @@ jobs:
 
       - name: Increase version n main-Branch
         run: |
-          git checkout main
+          git checkout master
           mvn versions:set -DnewVersion=${{ steps.version.outputs.next_version }}
           git commit -a -m "Bump version to ${{ steps.version.outputs.next_version }}"
-          git push origin main
+          git push origin master
 
       - name: GitHub Release Creation
         uses: softprops/action-gh-release@v2
