@@ -38,6 +38,7 @@
     <properties>
         <java.version>17</java.version>
         <spring-boot.version>3.4.5</spring-boot.version>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
     </properties>
 
     <dependencyManagement>
@@ -129,15 +130,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <configuration>
+                    <pinentryMode>loopback</pinentryMode>
+                    <useAgent>false</useAgent>
+                    <passphraseServer>true</passphraseServer>
+                </configuration>
             </plugin>
 
             <plugin>
