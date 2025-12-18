@@ -5,7 +5,6 @@ on:
     types: [published]
   workflow_dispatch:
 
-
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -28,6 +27,13 @@ jobs:
           server-password: OSSRH_TOKEN
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
+
+      - name: Create settings-security.xml
+        run: |
+          mkdir -p ~/.m2
+          echo '<settingsSecurity>
+            <master>maven</master>
+          </settingsSecurity>' > ~/.m2/settings-security.xml
 
       - name: Publish to Maven Central
         run: mvn --batch-mode clean deploy -DskipTests
