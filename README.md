@@ -4,6 +4,8 @@
 
 A unified data masking library for Spring Boot applications that provides consistent masking of sensitive data in both JSON responses and logs.
 
+> **If you find this project useful, please consider giving it a ⭐ on GitHub!**
+
 ## Features
 
 - **Annotation-based**: Simply mark fields with `@Sensitive` to enable masking
