@@ -32,3 +32,9 @@ updates:
     commit-message:
       prefix: "backend-java"
       include: "scope"
+    ignore:
+      - dependency-name: "org.springframework.security:spring-security-core"
+      - dependency-name: "org.springframework:spring-core"
+      - dependency-name: "org.springframework:spring-web"
+      - dependency-name: "ch.qos.logback:logback-core"
+      - dependency-name: "org.springframework:spring-context"
