@@ -22,7 +22,7 @@
     <developers>
         <developer>
             <name>Christian Klisch</name>
-            <email>deine-email@beispiel.de</email>
+            <email>christian.klisch@gmx.de</email>
             <organization>Christian Klisch</organization>
             <organizationUrl>https://www.christian-klisch.de</organizationUrl>
         </developer>
@@ -30,8 +30,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/christianklisch/smartmask-spring-boot-starter.git</connection>
-        <developerConnection>scm:git:ssh://github.com:christianklisch/smartmask-spring-boot-starter.git
-        </developerConnection>
+        <developerConnection>scm:git:ssh://github.com:christianklisch/smartmask-spring-boot-starter.git</developerConnection>
         <url>https://github.com/christianklisch/smartmask-spring-boot-starter/tree/main</url>
     </scm>
 
