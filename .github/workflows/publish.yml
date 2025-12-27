@@ -19,17 +19,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Create settings-security.xml
-        run: |
-          mkdir -p ~/.m2
-          echo '<settingsSecurity>
-            <master>maven</master>
-          </settingsSecurity>' > ~/.m2/settings-security.xml
+#      - name: Create settings-security.xml
+#        run: |
+#          mkdir -p /home/runner/.m2
+#          echo '<settingsSecurity>
+#            <master>'${{ secrets.MAVEN_MASTER_PASSWORD }}'</master>
+#          </settingsSecurity>' > /home/runner/.m2/settings-security.xml
+#          chmod 600 /home/runner/.m2/settings-security.xml
 
       - name: Create Maven settings
         run: |
-          mkdir -p ~/.m2
-          cat > ~/.m2/settings.xml << 'EOF'
+          mkdir -p /home/runner/.m2
+          cat > /home/runner/.m2/settings.xml << 'EOF'
           <settings>
             <servers>
               <server>
@@ -40,6 +41,7 @@ jobs:
             </servers>
           </settings>
           EOF
+          chmod 600 /home/runner/.m2/settings.xml
 
       - name: Import GPG key
         run: |
