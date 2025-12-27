@@ -22,7 +22,7 @@ jobs:
       - name: Create Maven settings
         run: |
           mkdir -p /home/runner/.m2
-          cat > /home/runner/.m2/settings.xml << EOF
+          cat > /home/runner/.m2/settings.xml << 'EOF'
           <settings>
             <servers>
               <server>
