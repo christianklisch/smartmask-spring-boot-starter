@@ -19,13 +19,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-#      - name: Create settings-security.xml
-#        run: |
-#          mkdir -p /home/runner/.m2
-#          echo '<settingsSecurity>
-#            <master>'${{ secrets.MAVEN_MASTER_PASSWORD }}'</master>
-#          </settingsSecurity>' > /home/runner/.m2/settings-security.xml
-#          chmod 600 /home/runner/.m2/settings-security.xml
+      - name: Create settings-security.xml
+        run: |
+          mkdir -p /home/runner/.m2
+          echo '<settingsSecurity>
+            <master>'${{ secrets.MAVEN_MASTER_PASSWORD }}'</master>
+          </settingsSecurity>' > /home/runner/.m2/settings-security.xml
+          chmod 600 /home/runner/.m2/settings-security.xml
 
       - name: Create Maven settings
         run: |
