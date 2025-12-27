@@ -19,6 +19,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Create settings-security.xml
+        run: |
+          mkdir -p ~/.m2
+          echo '<settingsSecurity>
+            <master>maven</master>
+          </settingsSecurity>' > ~/.m2/settings-security.xml
+
       - name: Create Maven settings
         run: |
           mkdir -p ~/.m2
