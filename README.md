@@ -35,7 +35,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>io.github.christianklisch</groupId>
     <artifactId>smartmask-spring-boot-starter</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
@@ -44,13 +44,13 @@ Add the following dependency to your `pom.xml`:
 Add the following dependency to your `build.gradle`:
 
 ```groovy
-implementation 'io.github.christianklisch:smartmask-spring-boot-starter:0.2.0'
+implementation 'io.github.christianklisch:smartmask-spring-boot-starter:0.3.0'
 ```
 
 Or if you're using Kotlin DSL (`build.gradle.kts`):
 
 ```kotlin
-implementation("io.github.christianklisch:smartmask-spring-boot-starter:0.2.0")
+implementation("io.github.christianklisch:smartmask-spring-boot-starter:0.3.0")
 ```
 
 ## Usage
