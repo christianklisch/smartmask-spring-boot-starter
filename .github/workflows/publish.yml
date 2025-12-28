@@ -18,37 +18,40 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-#          server-id: ossrh
-#          server-username: MAVEN_USERNAME
-#          server-password: MAVEN_PASSWORD
+          server-id: ossrh
+          server-username: ${{ secrets.OSSRH_USERNAME }}
+          server-password: ${{ secrets.OSSRH_TOKEN }}
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: Create Maven settings
-        run: |
-          mkdir -p /home/runner/.m2
-          cat > /home/runner/.m2/settings.xml << 'EOF'
-          <settings>
-            <servers>
-              <server>
-                <id>ossrh</id>
-                <username><![CDATA[${{ secrets.OSSRH_USERNAME }}]]></username>
-                <password><![CDATA[${{ secrets.OSSRH_TOKEN }}]]></password>
-              </server>
-            </servers>
-          </settings>
-          EOF
-          chmod 600 /home/runner/.m2/settings.xml
 
-      - name: Import GPG key
-        run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-          gpg --list-secret-keys --keyid-format LONG
+#      - name: Create Maven settings
+#        run: |
+#          mkdir -p /home/runner/.m2
+#          cat > /home/runner/.m2/settings.xml << 'EOF'
+#          <settings>
+#            <servers>
+#              <server>
+#                <id>ossrh</id>
+#                <username><![CDATA[${{ secrets.OSSRH_USERNAME }}]]></username>
+#                <password><![CDATA[${{ secrets.OSSRH_TOKEN }}]]></password>
+#              </server>
+#            </servers>
+#          </settings>
+#          EOF
+#          chmod 600 /home/runner/.m2/settings.xml
+#
+#      - name: Import GPG key
+#        run: |
+#          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+#          gpg --list-secret-keys --keyid-format LONG
 
       - name: Publish to Maven Central
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+#          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+#          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn --batch-mode clean deploy -DskipTests
