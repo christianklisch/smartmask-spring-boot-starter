@@ -20,10 +20,20 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Configure Maven Settings for OSSRH
-        uses: s4u/maven-settings-action@v3.0.0
-        with:
-          servers: ${{ toJson( [{id: 'ossrh', username: secrets.OSSRH_USERNAME, password: secrets.OSSRH_TOKEN}] ) }}
+      - name: Create robust Maven settings.xml
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml <<EOF
+          <settings>
+            <servers>
+              <server>
+                <id>ossrh</id>
+                <username><![CDATA[${{ secrets.OSSRH_USERNAME }}]]></username>
+                <password><![CDATA[${{ secrets.OSSRH_TOKEN }}]]></password>
+              </server>
+            </servers>
+          </settings>
+          EOF
 
       - name: Import GPG Key
         uses: crazy-max/ghaction-import-gpg@v6
@@ -32,6 +42,6 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Publish to Maven Central
-        run: mvn --batch-mode -s $MAVEN_SETTINGS_PATH clean deploy -DskipTests -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+        run: mvn --batch-mode clean deploy -DskipTests -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
