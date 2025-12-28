@@ -22,21 +22,21 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
 
-      - name: Create Maven settings
-        run: |
-          mkdir -p /home/runner/.m2
-          cat > /home/runner/.m2/settings.xml << 'EOF'
-          <settings>
-            <servers>
-              <server>
-                <id>ossrh</id>
-                <username>${{ secrets.OSSRH_USERNAME }}</username>
-                <password>${{ secrets.OSSRH_TOKEN }}</password>
-              </server>
-            </servers>
-          </settings>
-          EOF
-          chmod 600 /home/runner/.m2/settings.xml
+#      - name: Create Maven settings
+#        run: |
+#          mkdir -p /home/runner/.m2
+#          cat > /home/runner/.m2/settings.xml << 'EOF'
+#          <settings>
+#            <servers>
+#              <server>
+#                <id>ossrh</id>
+#                <username>${{ secrets.OSSRH_USERNAME }}</username>
+#                <password>${{ secrets.OSSRH_TOKEN }}</password>
+#              </server>
+#            </servers>
+#          </settings>
+#          EOF
+#          chmod 600 /home/runner/.m2/settings.xml
 
       - name: Import GPG key
         run: |
