@@ -32,7 +32,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>io.github.christianklisch</groupId>
     <artifactId>smartmask-spring-boot-starter</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
