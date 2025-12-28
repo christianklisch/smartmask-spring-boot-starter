@@ -23,14 +23,7 @@ jobs:
       - name: Configure Maven Settings for OSSRH
         uses: s4u/maven-settings-action@v3.0.0
         with:
-          servers: >
-            [
-              {
-                "id": "ossrh",
-                "username": "${{ secrets.OSSRH_USERNAME }}",
-                "password": "${{ secrets.OSSRH_TOKEN }}"
-              }
-            ]
+          servers: ${{ toJson( [{id: 'ossrh', username: secrets.OSSRH_USERNAME, password: secrets.OSSRH_TOKEN}] ) }}
 
       - name: Import GPG Key
         uses: crazy-max/ghaction-import-gpg@v6
