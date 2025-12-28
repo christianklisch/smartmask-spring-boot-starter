@@ -3,7 +3,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.christianklisch/smartmask-spring-boot-starter)
 ![Build Status](https://github.com/christianklisch/smartmask-spring-boot-starter/actions/workflows/ci.yml/badge.svg)
-![License](https://img.shields.io/github/license/christianklisch/smartmask-spring-boot-starter)
 
 
 A unified data masking library for Spring Boot applications that delivers consistent masking of sensitive data across JSON responses and logs, designed to support GDPR/DSGVO compliance, audit logging, and security-critical logging scenarios.
