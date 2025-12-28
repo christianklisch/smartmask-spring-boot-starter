@@ -37,7 +37,6 @@
     <properties>
         <java.version>17</java.version>
         <spring-boot.version>3.4.5</spring-boot.version>
-        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
     </properties>
 
     <dependencyManagement>
