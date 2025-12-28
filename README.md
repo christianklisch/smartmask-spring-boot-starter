@@ -18,7 +18,7 @@ A unified data masking library for Spring Boot applications that provides consis
 ## Requirements
 
 - Java 17 or higher
-- Spring Boot 3.x
+- Spring Boot 3.5.x
 - Jackson (for JSON masking)
 - Logback (for log masking)
 
@@ -41,13 +41,13 @@ Add the following dependency to your `pom.xml`:
 Add the following dependency to your `build.gradle`:
 
 ```groovy
-implementation 'io.github.christianklisch:smartmask-spring-boot-starter:0.1.0'
+implementation 'io.github.christianklisch:smartmask-spring-boot-starter:0.2.0'
 ```
 
 Or if you're using Kotlin DSL (`build.gradle.kts`):
 
 ```kotlin
-implementation("io.github.christianklisch:smartmask-spring-boot-starter:0.1.0")
+implementation("io.github.christianklisch:smartmask-spring-boot-starter:0.2.0")
 ```
 
 ## Usage
