@@ -27,7 +27,7 @@ jobs:
           <settings>
             <servers>
               <server>
-                <id>ossrh</id>
+                <id>central</id>
                 <username><![CDATA[${{ secrets.OSSRH_USERNAME }}]]></username>
                 <password><![CDATA[${{ secrets.OSSRH_TOKEN }}]]></password>
               </server>
