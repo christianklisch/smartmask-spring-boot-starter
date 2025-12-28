@@ -23,7 +23,7 @@ jobs:
       - name: Configure Maven Settings for OSSRH
         uses: s4u/maven-settings-action@v3.0.0
         with:
-          servers: |
+          servers: >
             [
               {
                 "id": "ossrh",
