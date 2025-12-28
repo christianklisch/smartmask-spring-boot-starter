@@ -57,35 +57,24 @@ public class SensitiveDataMaskingAutoConfiguration {
     }
 
     /**
-     * Customizes the ObjectMapper to use our annotation introspector
-     * 
-     * @param objectMapper The default ObjectMapper
-     * @param sensitiveAnnotationIntrospector Our custom annotation introspector
-     * @return The customized ObjectMapper
+     * Defines a primary ObjectMapper bean, configures it with all discovered Jackson modules,
+     * and sets the custom SensitiveAnnotationIntrospector.
+     * This ObjectMapper will be used by default throughout the Spring application for JSON serialization/deserialization.
+     * It ensures that any auto-configured Jackson modules are registered and that sensitive data handling
+     * is enabled through the custom introspector.
+     *
+     * @param jacksonModules                 A list of Jackson modules discovered by Spring Boot, to be registered with the ObjectMapper.
+     * @param sensitiveAnnotationIntrospector The custom annotation introspector for masking sensitive data.
+     * @return A customized ObjectMapper instance.
      */
     @Bean
-    public ObjectMapper objectMapperCustomizer(ObjectMapper objectMapper, 
-                                              SensitiveAnnotationIntrospector sensitiveAnnotationIntrospector) {
-        objectMapper.setAnnotationIntrospector(sensitiveAnnotationIntrospector);
-        return objectMapper;
+    @Primary
+    @ConditionalOnMissingBean
+    public ObjectMapper objectMapper(java.util.List<Module> jacksonModules, SensitiveAnnotationIntrospector sensitiveAnnotationIntrospector) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModules(jacksonModules);
+        mapper.setAnnotationIntrospector(sensitiveAnnotationIntrospector);
+        // Additional configurations here...
+        return mapper;
     }
-
-    /**
-     * Defines a primary ObjectMapper bean and registers the Sensitive Data Masking module.
-     * This ObjectMapper will be used by default throughout the Spring application unless another ObjectMapper bean is present.
-     * The method ensures that the sensitiveDataMaskingModule—which integrates custom masking logic for handling sensitive data during JSON serialization—is registered with the ObjectMapper.
-     * Additional configuration can be added within this method to further customize JSON serialization/deserialization behavior as needed.
-     *
-     * @param sensitiveDataMaskingModule the Jackson Module that handles sensitive data masking via annotation introspection
-     * @return a customized ObjectMapper instance with the masking module registered
-     */
-     @Bean
-     @Primary
-     @ConditionalOnMissingBean
-     public ObjectMapper objectMapper(Module sensitiveDataMaskingModule) {
-         ObjectMapper mapper = new ObjectMapper();
-         mapper.registerModule(sensitiveDataMaskingModule);
-         // Additional configurations here...
-         return mapper;
-     }
 }
