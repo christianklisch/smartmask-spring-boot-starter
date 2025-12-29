@@ -134,6 +134,10 @@ log.info("User created: {}", user);
 - `MaskType.PHONE_NUMBER`: Shows first 3 and last 2 digits (e.g., `123****78`)
 - `MaskType.IBAN`: Shows first 4 and last 4 characters (e.g., `DE89************1234`)
 
+## Examples
+
+You can find a complete example project in the [/examples/springboot3](examples/springboot3) directory.
+
 ## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](http://www.apache.org/licenses/LICENSE-2.0.txt) file for details.
@@ -147,3 +151,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+## Code of Conduct
+
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms. Please read the [Code of Conduct](code-of-conduct.md) for more information.
+
