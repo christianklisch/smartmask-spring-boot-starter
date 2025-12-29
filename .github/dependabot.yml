@@ -38,3 +38,4 @@ updates:
       - dependency-name: "org.springframework:spring-web"
       - dependency-name: "ch.qos.logback:logback-core"
       - dependency-name: "org.springframework:spring-context"
+      - dependency-name: "org.springframework.boot:spring-boot-dependencies"
