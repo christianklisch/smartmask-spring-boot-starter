@@ -10,7 +10,6 @@
  * which is automatically detected by Spring Boot's auto-configuration mechanism when the
  * SmartMask library is added as a dependency to a Spring Boot application.
  * </p>
- * <p>
  * The auto-configuration:
  * <ul>
  *   <li>Creates a {@link io.github.christianklisch.smartmask.security.SecurityContextProvider} bean if none exists</li>
@@ -18,7 +17,6 @@
  *   <li>Creates a Jackson module for sensitive data masking</li>
  *   <li>Provides a primary {@link com.fasterxml.jackson.databind.ObjectMapper} configured for sensitive data masking</li>
  * </ul>
- * </p>
  * <p>
  * No manual configuration is required to use the SmartMask library in a Spring Boot application.
  * Simply add the library as a dependency, and the auto-configuration will take care of the rest.

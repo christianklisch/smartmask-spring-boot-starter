@@ -5,7 +5,6 @@
  * and log messages. It uses a single annotation-based approach to define which fields should be
  * masked and how they should be masked.
  * </p>
- * <p>
  * Key features:
  * <ul>
  *   <li>Annotation-based masking with {@link io.github.christianklisch.smartmask.annotations.Sensitive}</li>
@@ -14,7 +13,6 @@
  *   <li>Automatic integration with Jackson for JSON serialization</li>
  *   <li>Integration with Logback for log message masking</li>
  * </ul>
- * </p>
  * <p>
  * The library is designed to be easy to use and integrate with existing Spring Boot applications.
  * Simply add the dependency to your project, and the auto-configuration will take care of the rest.

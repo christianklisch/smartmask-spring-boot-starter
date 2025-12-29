@@ -6,7 +6,6 @@
  * allows fields annotated with {@link io.github.christianklisch.smartmask.annotations.Sensitive}
  * to be automatically masked during JSON serialization.
  * </p>
- * <p>
  * The key classes in this package are:
  * <ul>
  *   <li>{@link io.github.christianklisch.smartmask.jackson.SensitiveAnnotationIntrospector} - 
@@ -16,7 +15,6 @@
  *       A Jackson JsonSerializer that applies masking to sensitive data based on the
  *       configuration in the {@link io.github.christianklisch.smartmask.annotations.Sensitive} annotation</li>
  * </ul>
- * </p>
  * <p>
  * These classes are automatically configured by the {@link io.github.christianklisch.smartmask.autoconfig.SensitiveDataMaskingAutoConfiguration}
  * class and do not need to be manually configured in most cases.

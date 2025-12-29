@@ -19,7 +19,6 @@ import org.springframework.lang.NonNull;
  * registers all the necessary beans for the SmartMask library to function properly
  * when included in a Spring Boot application.
  * </p>
- * <p>
  * The auto-configuration:
  * <ul>
  *   <li>Creates a {@link SecurityContextProvider} bean if none exists</li>
@@ -27,7 +26,6 @@ import org.springframework.lang.NonNull;
  *   <li>Creates a Jackson module for sensitive data masking</li>
  *   <li>Provides a primary {@link ObjectMapper} configured for sensitive data masking</li>
  * </ul>
- * </p>
  * <p>
  * This auto-configuration is only activated if Jackson is available on the classpath
  * (specifically, if {@link ObjectMapper} and {@link Module} classes are present).

@@ -38,9 +38,17 @@ import java.util.stream.Stream;
  * &lt;/configuration&gt;
  * </pre>
  * <p>
- * Note: This implementation uses reflection to discover fields annotated with {@link Sensitive}
- * and caches the results for performance. In a future version, it could be enhanced to
- * create a copy of objects or use a proxy to avoid modifying the original objects.
+ * This implementation uses an optimized reflection approach to discover fields annotated with {@link Sensitive}:
+ * </p>
+ * <ul>
+ *   <li>It traverses the entire class hierarchy to find all annotated fields, including inherited ones</li>
+ *   <li>It employs a two-level caching strategy with both instance-level and static global caches</li>
+ *   <li>The global cache is shared across all instances of the converter for maximum efficiency</li>
+ *   <li>Field discovery is performed only once per class and the results are cached</li>
+ * </ul>
+ * <p>
+ * In a future version, it could be enhanced to create a copy of objects or use a proxy 
+ * to avoid modifying the original objects.
  * </p>
  * 
  * @see Sensitive
@@ -51,6 +59,9 @@ public class MaskingMessageConverter extends ClassicConverter {
 
     // Cache for reflection results to improve performance
     private final Map<Class<?>, Field[]> sensitiveFieldsCache = new ConcurrentHashMap<>();
+
+    // Static cache for better performance across instances
+    private static final Map<Class<?>, Field[]> globalSensitiveFieldsCache = new ConcurrentHashMap<>();
 
     /**
      * Converts a logging event by masking any sensitive data in the log arguments.
@@ -102,14 +113,24 @@ public class MaskingMessageConverter extends ClassicConverter {
             return arg;
         }
 
-        // Check if we've already analyzed this class
-        Field[] sensitiveFields = sensitiveFieldsCache.computeIfAbsent(arg.getClass(), 
-            clazz -> {
-                // Find all fields with @Sensitive annotation
-                return Stream.of(clazz.getDeclaredFields())
-                    .filter(field -> field.isAnnotationPresent(Sensitive.class))
-                    .toArray(Field[]::new);
-            });
+        Class<?> clazz = arg.getClass();
+
+        // First check the instance cache
+        Field[] sensitiveFields = sensitiveFieldsCache.get(clazz);
+
+        if (sensitiveFields == null) {
+            // Then check the global cache
+            sensitiveFields = globalSensitiveFieldsCache.get(clazz);
+
+            if (sensitiveFields == null) {
+                // If not in any cache, discover fields and cache the result
+                sensitiveFields = discoverSensitiveFields(clazz);
+                globalSensitiveFieldsCache.put(clazz, sensitiveFields);
+            }
+
+            // Update the instance cache
+            sensitiveFieldsCache.put(clazz, sensitiveFields);
+        }
 
         if (sensitiveFields.length > 0) {
             // In a real implementation, we would create a copy of the object or
@@ -119,6 +140,48 @@ public class MaskingMessageConverter extends ClassicConverter {
         }
 
         return arg;
+    }
+
+    /**
+     * Discovers all fields annotated with {@link Sensitive} in a class and its superclasses.
+     * <p>
+     * This method uses reflection to find all fields in the class hierarchy that are
+     * annotated with {@link Sensitive}. It includes both declared fields and inherited fields.
+     * </p>
+     * <p>
+     * The implementation is optimized for performance:
+     * </p>
+     * <ul>
+     *   <li>It uses a HashSet to efficiently collect fields and avoid duplicates</li>
+     *   <li>It traverses the class hierarchy iteratively rather than recursively</li>
+     *   <li>It processes fields directly in a loop rather than using Stream API for better performance</li>
+     *   <li>The results are cached to avoid repeated reflection operations</li>
+     * </ul>
+     *
+     * @param clazz The class to analyze
+     * @return An array of fields annotated with {@link Sensitive}
+     */
+    @NonNull
+    private Field[] discoverSensitiveFields(@NonNull Class<?> clazz) {
+        // Use a set to avoid duplicate fields
+        java.util.Set<Field> sensitiveFields = new java.util.HashSet<>();
+
+        // Traverse the class hierarchy
+        Class<?> currentClass = clazz;
+        while (currentClass != null && currentClass != Object.class) {
+            // Find declared fields with @Sensitive annotation
+            Field[] declaredFields = currentClass.getDeclaredFields();
+            for (Field field : declaredFields) {
+                if (field.isAnnotationPresent(Sensitive.class)) {
+                    sensitiveFields.add(field);
+                }
+            }
+
+            // Move up to the superclass
+            currentClass = currentClass.getSuperclass();
+        }
+
+        return sensitiveFields.toArray(new Field[0]);
     }
 
     /**
