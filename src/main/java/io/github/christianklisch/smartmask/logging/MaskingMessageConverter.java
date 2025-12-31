@@ -133,10 +133,24 @@ public class MaskingMessageConverter extends ClassicConverter {
         }
 
         if (sensitiveFields.length > 0) {
-            // In a real implementation, we would create a copy of the object or
-            // use a proxy to avoid corrupting the original.
-            // For this example, we'll return a masked string representation.
-            return "MaskedObject(" + arg.getClass().getSimpleName() + ")";
+            // Instead of replacing the entire object, we'll mask the sensitive fields
+            // by using the object's toString() method and returning the original object
+            // The toString() method will be called later when the object is formatted
+            // and will show the object structure with masked sensitive fields
+            for (Field field : sensitiveFields) {
+                try {
+                    field.setAccessible(true);
+                    Object originalValue = field.get(arg);
+                    if (originalValue != null) {
+                        // Apply masking based on the Sensitive annotation
+                        Sensitive annotation = field.getAnnotation(Sensitive.class);
+                        String maskedValue = "******"; // Default mask
+                        field.set(arg, maskedValue);
+                    }
+                } catch (IllegalAccessException e) {
+                    // If we can't access the field, we'll just leave it as is
+                }
+            }
         }
 
         return arg;

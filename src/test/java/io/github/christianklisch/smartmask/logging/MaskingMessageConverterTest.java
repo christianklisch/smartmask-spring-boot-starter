@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -97,8 +98,10 @@ public class MaskingMessageConverterTest {
         String result = converter.convert(loggingEvent);
 
         // Assert
-        assertTrue(result.contains("MaskedObject"));
         assertTrue(result.contains("UserWithSensitiveData"));
+        assertTrue(result.contains("username='testuser'"));
+        assertTrue(result.contains("password='******'"));
+        assertFalse(result.contains("secret123"));
     }
 
     /**
@@ -120,8 +123,10 @@ public class MaskingMessageConverterTest {
         String result = converter.convert(loggingEvent);
 
         // Assert
-        assertTrue(result.contains("MaskedObject"));
         assertTrue(result.contains("UserWithSensitiveData"));
+        assertTrue(result.contains("username='testuser'"));
+        assertTrue(result.contains("password='******'"));
+        assertFalse(result.contains("secret123"));
         assertTrue(result.contains("42"));
         assertTrue(result.contains("Hello World"));
     }
@@ -132,7 +137,7 @@ public class MaskingMessageConverterTest {
     static class UserWithSensitiveData {
         @Sensitive
         private String password = "secret123";
-        
+
         private String username = "testuser";
 
         @Override
