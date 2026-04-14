@@ -50,7 +50,7 @@ jobs:
         run: git checkout releases/${{ steps.version.outputs.release_version }}
 
       - name: GitHub Release Creation
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.version.outputs.release_version }}
           name: Release ${{ steps.version.outputs.release_version }}
